@@ -1,6 +1,5 @@
 import httpStatus from 'http-status'
 import {
-  getAllFlightsAsync,
   getFlightsByPaymentDate
 } from '../../../service/connection/pgManager.js'
 import { getManyParameterUseCase } from '../repository/index.js'

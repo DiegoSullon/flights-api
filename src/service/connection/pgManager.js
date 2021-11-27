@@ -14,6 +14,7 @@ const client = new pg.Client({
   }
 })
 client.connect()
+
 export const getAllFlightsAsync = () =>
   new Promise((resolve, reject) => {
     try {
@@ -27,18 +28,37 @@ export const getAllFlightsAsync = () =>
         (error, results) => {
           if (error) {
             throw error
+          } else {
+            console.log(results.rows)
+            resolve(results.rows)
           }
-          console.log(results.rows)
-          resolve(results.rows) //if works
         }
       )
     } catch (err) {
-      reject(err) //doesn't work
+      reject(err)
+    }
+  })
+export const getAll = (table= 'aerolinea') =>
+  new Promise((resolve, reject) => {
+    try {
+      client.query(
+        `select * from ${table}`,
+        (error, results) => {
+          if (error) {
+            throw error
+          } else {
+            console.log(results.rows)
+            resolve(results.rows)
+          }
+        }
+      )
+    } catch (err) {
+      reject(err)
     }
   })
 export const getFlightsByPaymentDate = (date = '') =>
   new Promise((resolve, reject) => {
-    const whereQuery = date !==''? `where p.fecha::text like '%${date}%'` : ''
+    const whereQuery = date !== '' ? `where p.fecha::text like '%${date}%'` : ''
     try {
       client.query(
         `select r.fecha as fecha, a2.nombre as "aerolinea", a.tipo as "tipo", a.capacidad as "capacidad", a3.nombre as "aeropuerto", p.fecha as "pago"
@@ -50,13 +70,39 @@ export const getFlightsByPaymentDate = (date = '') =>
         join aeropuerto a3 on a3.idaeropuerto  = v.idareopuerto ${whereQuery}`,
         (error, results) => {
           if (error) {
-            throw error
+            reject(error)
+          } else {
+            console.log(results.rows)
+            resolve(results.rows)
           }
-          console.log(results.rows)
-          resolve(results.rows) //if works
         }
       )
     } catch (err) {
-      reject(err) //doesn't work
+      reject(err)
+    }
+  })
+
+export const postFlight = ({
+  idasiento,
+  idareopuerto,
+  idreserva,
+  idavion,
+  idtarifa
+}) =>
+  new Promise((resolve, reject) => {
+    try {
+      client.query(
+        `INSERT INTO vuelo (idasiento, idareopuerto, idreserva, idavion, idtarifa) VALUES(${idasiento}, ${idareopuerto}, ${idreserva}, ${idavion}, ${idtarifa})`,
+        (error, results) => {
+          if (error) {
+            reject(error)
+          } else {
+            console.log(results.command)
+            resolve(results.command)
+          }
+        }
+      )
+    } catch (err) {
+      reject(err)
     }
   })
