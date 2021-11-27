@@ -1,5 +1,8 @@
 import httpStatus from 'http-status'
-import { getFlights } from '../../../service/connection/pgManager.js'
+import {
+  getAllFlightsAsync,
+  getFlightsByPaymentDate
+} from '../../../service/connection/pgManager.js'
 import { getManyParameterUseCase } from '../repository/index.js'
 
 class GetManyController {
@@ -10,10 +13,29 @@ class GetManyController {
 
   run = async (req, res, next) => {
     try {
-      getFlights()
-      // const parametersName = req.query['parameter_name']
-      // const result = await this.useCase.getMany(parametersName, requestContext)
-      res.status(httpStatus.OK).json({})
+      const { date } = req.query
+      if (date) {
+        console.log(`Getting Flights by date: ${date}`)
+        getFlightsByPaymentDate(date)
+          .then(data => {
+            res.status(httpStatus.OK).json(JSON.parse(JSON.stringify(data)))
+            console.log(data)
+          })
+          .catch(error => {
+            console.error(`Error getting all flights`)
+            console.error(error)
+          })
+      } else {
+        getFlightsByPaymentDate()
+          .then(data => {
+            res.status(httpStatus.OK).json(JSON.parse(JSON.stringify(data)))
+            console.log(data)
+          })
+          .catch(error => {
+            console.error(`Error getting all flights`)
+            console.error(error)
+          })
+      }
     } catch (error) {
       error.method = this.method
       next(error)

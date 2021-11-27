@@ -14,11 +14,49 @@ const client = new pg.Client({
   }
 })
 client.connect()
-export const getFlights = () => {
-  client.query('SELECT 123 AS value', (error, results) => {
-    if (error) {
-      throw error
+export const getAllFlightsAsync = () =>
+  new Promise((resolve, reject) => {
+    try {
+      client.query(
+        `select r.fecha as fecha, a2.nombre as "aerolinea", a.tipo as "tipo", a.capacidad as "capacidad", a3.nombre as "aeropuerto"
+    from vuelo v join reserva r on v.idreserva = r.idreserva 
+    join tarifa t on t.idtarifa  = v.idtarifa 
+    join avion a on a.idavion = v.idavion 
+    join aerolinea a2 on a2.idaerolinea  = a.idaerolinea
+    join aeropuerto a3 on a3.idaeropuerto  = v.idareopuerto `,
+        (error, results) => {
+          if (error) {
+            throw error
+          }
+          console.log(results.rows)
+          resolve(results.rows) //if works
+        }
+      )
+    } catch (err) {
+      reject(err) //doesn't work
     }
-    console.log(results.rows)
   })
-}
+export const getFlightsByPaymentDate = (date = '') =>
+  new Promise((resolve, reject) => {
+    const whereQuery = date !==''? `where p.fecha::text like '%${date}%'` : ''
+    try {
+      client.query(
+        `select r.fecha as fecha, a2.nombre as "aerolinea", a.tipo as "tipo", a.capacidad as "capacidad", a3.nombre as "aeropuerto", p.fecha as "pago"
+        from vuelo v join reserva r on v.idreserva = r.idreserva 
+        join pago p on p.idreserva = r.idreserva 
+        join tarifa t on t.idtarifa  = v.idtarifa 
+        join avion a on a.idavion = v.idavion 
+        join aerolinea a2 on a2.idaerolinea  = a.idaerolinea
+        join aeropuerto a3 on a3.idaeropuerto  = v.idareopuerto ${whereQuery}`,
+        (error, results) => {
+          if (error) {
+            throw error
+          }
+          console.log(results.rows)
+          resolve(results.rows) //if works
+        }
+      )
+    } catch (err) {
+      reject(err) //doesn't work
+    }
+  })
