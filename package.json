@@ -1,0 +1,28 @@
+{
+  "name": "flights-api",
+  "version": "1.0.0",
+  "description": "Flights API",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "gitreposito.git"
+  },
+  "keywords": [
+    "express"
+  ],
+  "author": "Diego Sullon",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "http-status": "^1.5.0",
+    "pg": "^8.7.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  },
+  "type": "module"
+}
