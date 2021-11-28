@@ -6,6 +6,8 @@ import {
   DB_USER
 } from '../../config/envars.js'
 import pg from 'pg'
+import { getPaymentAirline } from '../model/payment.js'
+import { response } from 'express'
 
 const client = new pg.Client({
   connectionString: `postgres://${DB_USER}:${DB_PASS}@${DB_HOST}:${DB_PORT}/${DB_NAME}`,
@@ -47,6 +49,7 @@ export const getAll = (table= 'aerolinea') =>
           if (error) {
             throw error
           } else {
+            console.log(`Get all rows ${table} table`)
             console.log(results.rows)
             resolve(results.rows)
           }
@@ -55,6 +58,12 @@ export const getAll = (table= 'aerolinea') =>
     } catch (err) {
       reject(err)
     }
+  })
+export const getPaymentA = () =>
+  new Promise((resolve, reject) => {
+    getPaymentAirline(client).then(response => resolve(response))
+    .catch(error => reject(error))
+    
   })
 export const getFlightsByPaymentDate = (date = '') =>
   new Promise((resolve, reject) => {
