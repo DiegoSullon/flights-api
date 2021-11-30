@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "86d2275c-d14b-4d37-9602-f3428387fac0",
+		"_postman_id": "53302cd8-a877-4a7f-92bf-ab91a4a77ca5",
 		"name": "api-vuelos",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -11,16 +11,17 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3000/api/v1/flights?date=2021-11-18",
-					"protocol": "http",
+					"raw": "https://api-flights.herokuapp.com/api/v1/flight?date=2021-11-18",
+					"protocol": "https",
 					"host": [
-						"localhost"
+						"api-flights",
+						"herokuapp",
+						"com"
 					],
-					"port": "3000",
 					"path": [
 						"api",
 						"v1",
-						"flights"
+						"flight"
 					],
 					"query": [
 						{
@@ -31,6 +32,99 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "GetBooking",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api-flights.herokuapp.com/api/v1/booking",
+					"protocol": "https",
+					"host": [
+						"api-flights",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"booking"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PostFlight",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "https://api-flights.herokuapp.com/api/v1/flight/upload",
+					"protocol": "https",
+					"host": [
+						"api-flights",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"flight",
+						"upload"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetPassengersByFlights",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/api/v1/passenger?rows=3&apaterno=Suarez&amaterno=Vasquez&nombre=Pedro&fechaNacimiento=1995-12-25",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"passenger"
+					],
+					"query": [
+						{
+							"key": "rows",
+							"value": "3"
+						},
+						{
+							"key": "apaterno",
+							"value": "Suarez"
+						},
+						{
+							"key": "amaterno",
+							"value": "Vasquez"
+						},
+						{
+							"key": "nombre",
+							"value": "Pedro"
+						},
+						{
+							"key": "fechaNacimiento",
+							"value": "1995-12-25"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": "http://localhost:3000"
 		}
 	]
 }
