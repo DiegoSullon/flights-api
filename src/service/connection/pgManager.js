@@ -40,6 +40,31 @@ export const getAllFlightsAsync = () =>
       reject(err)
     }
   })
+export const getPassengerByFlights = (n = 3, surname1='', surname2='', name='', bithdate='') =>
+  new Promise((resolve, reject) => {
+    try {
+      client.query(
+        `select * from pasajero where pasajero.apaterno like '%${surname1}%' 
+        and pasajero.amaterno like '%${surname2}%' 
+        and pasajero.nombre like '%${name}%' and pasajero.fecha_nacimiento ::text like '%${bithdate}%'
+        order by (SELECT COUNT(pago.idpasajero) 
+        FROM pago WHERE pago.idpasajero 
+        IN(SELECT idpasajero FROM pasajero) 
+        and pago.idpasajero = pasajero.idpasajero) desc FETCH FIRST ${n} ROWS ONLY`,
+        (error, results) => {
+          if (error) {
+            throw error
+          } else {
+            console.log(`Get ${n} passengers`)
+            console.log(results.rows)
+            resolve(results.rows)
+          }
+        }
+      )
+    } catch (err) {
+      reject(err)
+    }
+  })
 export const getAll = (table= 'aerolinea') =>
   new Promise((resolve, reject) => {
     try {

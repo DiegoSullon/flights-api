@@ -6,6 +6,7 @@ import seatRouter from './api/seat/router.js'
 import tariffRouter from './api/tariff/router.js'
 import bookingRouter from './api/booking/router.js'
 import paymentRouter from './api/payment/router.js'
+import passengerRouter from './api/passengers/router.js'
 
 let rootRouter = Router();
 
@@ -16,5 +17,6 @@ rootRouter.use('/seat', seatRouter);
 rootRouter.use('/tariff', tariffRouter);
 rootRouter.use('/booking', bookingRouter);
 rootRouter.use('/payment', paymentRouter);
+rootRouter.use('/passenger', passengerRouter);
 
 export default rootRouter;
