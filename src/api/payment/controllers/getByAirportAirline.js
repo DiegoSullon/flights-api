@@ -5,7 +5,9 @@ class GetAllController {
   method = 'getManyParameters'
   run = async (req, res, next) => {
     try {
-      getPaymentBookingByAirportAirline().then(data => {
+      const {destiny, airline} = req.query || ''
+      console.log(`query: ${destiny}-${airline}`)
+      getPaymentBookingByAirportAirline(destiny, airline).then(data => {
         res.status(httpStatus.OK).json(data)
       }).catch(error=>{
         console.error(`Error getting payments: ${error}`)

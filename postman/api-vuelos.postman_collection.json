@@ -84,11 +84,13 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:3000/api/v1/passenger?rows=3&apaterno=Suarez&amaterno=Vasquez&nombre=Pedro&fechaNacimiento=1995-12-25",
+					"raw": "https://api-flights.herokuapp.com/api/v1/passenger?rows=3&apaterno=&amaterno=&nombre=&fechaNacimiento=",
+					"protocol": "https",
 					"host": [
-						"localhost"
+						"api-flights",
+						"herokuapp",
+						"com"
 					],
-					"port": "3000",
 					"path": [
 						"api",
 						"v1",
@@ -101,19 +103,50 @@
 						},
 						{
 							"key": "apaterno",
-							"value": "Suarez"
+							"value": ""
 						},
 						{
 							"key": "amaterno",
-							"value": "Vasquez"
+							"value": ""
 						},
 						{
 							"key": "nombre",
-							"value": "Pedro"
+							"value": ""
 						},
 						{
 							"key": "fechaNacimiento",
-							"value": "1995-12-25"
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetPayment",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/api/v1/payment/booking?destiny=Aeropuerto Washington DC&airline=Avianca",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"payment",
+						"booking"
+					],
+					"query": [
+						{
+							"key": "destiny",
+							"value": "Aeropuerto Washington DC"
+						},
+						{
+							"key": "airline",
+							"value": "Avianca"
 						}
 					]
 				}

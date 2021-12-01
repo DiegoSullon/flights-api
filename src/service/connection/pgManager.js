@@ -65,15 +65,16 @@ export const getPassengerByFlights = (n = 3, surname1='', surname2='', name='', 
       reject(err)
     }
   })
-export const getPaymentBookingByAirportAirline = (detiny = '', airline='') =>
+export const getPaymentBookingByAirportAirline = (destiny = '', airline='') =>
   new Promise((resolve, reject) => {
+    console.log(`query222: ${destiny}-${airline}`)
     try {
       client.query(
         `select p.monto as "costo_total", r.costo  as "costo_reserva", r.fecha, a3.nombre as "vuelo", a2.nombre as "aerolinea"
         from pago p join reserva r on p.idreserva = r.idreserva 
         join vuelo v on v.idreserva = r.idreserva join avion a on a.idavion = v.idavion 
         join aerolinea a2 on a2.idaerolinea = a.idaerolinea join aeropuerto a3 
-        on a3.idaeropuerto = v.idareopuerto where a3.nombre like '%${detiny}%' and a2.nombre like '%${airline}%'`,
+        on a3.idaeropuerto = v.idareopuerto where a3.nombre like '%${destiny}%' and a2.nombre like '%${airline}%'`,
         (error, results) => {
           if (error) {
             throw error
